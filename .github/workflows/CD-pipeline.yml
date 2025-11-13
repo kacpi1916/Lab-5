@@ -1,0 +1,15 @@
+name: CD pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Pull Docker image
+        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/calculator-app:v1
+        # Remove the pulled docker container if it exists
+      - name: Delete Docker container
